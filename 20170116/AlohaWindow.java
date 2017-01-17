@@ -29,6 +29,7 @@ class AlohaWindowMan implements ActionListener {
 		frame.setLocation(600, 50);
 		frame.setSize(400, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		openBtn = new JButton("開く");
 		openBtn.addActionListener(this);
 		openBtn.setActionCommand("open");
@@ -56,27 +57,31 @@ class AlohaWindowMan implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		String cmd;
-		String textFile;
-		FileReader fr;
-		BufferedReader br;
+		String cmd = ae.getActionCommand();
 
-		try{
-			cmd = ae.getActionCommand();
-			textFile = fileName.getText();
-			fr = new FileReader(textFile);
-			br = new BufferedReader(fr);
 
-			if (cmd.equals("open")) {
-				fileName.getText();
-				fileName.setText("open");
-			} else if (cmd.equals("save")) {
-				fileName.setText("save");
+		if (cmd.equals("open")) {
+			String textFile = fileName.getText();
+			FileReader fr;
+			BufferedReader br;
+
+			fileName.setText("開く");
+
+			try{
+				fr = new FileReader(textFile);
+				br = new BufferedReader(fr);
+
+				String data;
+
+				while((data = br.readLine()) != null) {
+					textArea.append(data + '\n');
+				}
+
+			} catch(IOException e) {
+				System.out.println("IO error...");
 			}
-			String data = br.readLine();	// １行読む
-			textArea.setText(data);	// 書き込み・表示
-		} catch(IOException e) {
-			System.out.println("IO error...");
+		} else if(cmd.equals("save")) {
+			fileName.setText("保存");
 		}
 	}
 }
