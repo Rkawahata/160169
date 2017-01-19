@@ -2,18 +2,20 @@ var SCREEN_SIZE = 500;
 var SIDE_CELLS = 200;
 var CELL_SIZE = SCREEN_SIZE / SIDE_CELLS;
 var FPS = 10;
-var cvs = document.getElementById('world');
-var ctx = cvs.getContext('2d');
+var cvs;
+var ctx;
 
 window.onload = function() {
 	var field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
 	var tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
 	for (var i=0; i<field.length; i++) field[i]
 		 = Math.floor(Math.random()*2); // ランダムに「生」「死」を格納
+	cvs = document.getElementById('world');
 	cvs.width = cvs.height = SCREEN_SIZE; // キャンバスのサイズを設定
 	var scaleRate = Math.min(window.innerWidth/SCREEN_SIZE,
 		window.innerHeight/SCREEN_SIZE); // cvs引き伸ばし率の取得
 	cvs.style.width = cvs.style.height = SCREEN_SIZE*scaleRate+'px';  // キャンバスを引き伸ばし
+	ctx = cvs.getContext('2d');
 	ctx.fillStyle = 'rgb(211, 85, 149)';          // 色
 	update(field, tempField);   // ゲームループ開始
 }
@@ -28,7 +30,8 @@ function update(field, tempField) {
 				if (s==0 && t==0) continue; // 自身はカウントしない
 				var c = i+s*SIDE_CELLS+t;   // チェックするセル
 					if (c>=0 && c<tempField.length) { // 配列からはみ出していないか(上下の壁判定も兼ねて)
-						if (i<c && c%SIDE_CELLS!=0 || i>c && c%SIDE_CELLS!=SIDE_CELLS-1) { // 左右の壁判定
+						if (i<c && c%SIDE_CELLS!=0 ||
+							i>c && c%SIDE_CELLS!=SIDE_CELLS-1) { // 左右の壁判定
 							if (tempField[c]) n ++; // 「生」だったらカウント
 						}
 					}
