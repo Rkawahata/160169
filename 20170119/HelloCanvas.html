@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Canvas</title>
+</head>
+<body>
+	<h1>Canvas</h1>
+	<canvas id="canvas"	width="10000" height="900"></canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+
+/*		// 描く
+		// 線だけ
+		ctx.fillStyle = "rgb(0, 0, 0)";
+		ctx.strokeRect(400, 50, 500, 500);
+
+		// 塗りつぶし
+		ctx.fillStyle = "rgba(200, 100, 0, 0.5)";
+		ctx.fillRect(450, 100, 400, 400);
+
+		// 塗りつぶし
+		ctx.fillStyle = "rgba(200, 100, 0, 0.5)";
+		ctx.fillRect(400, 50, 200, 200);
+
+		// 塗りつぶし
+		ctx.fillStyle = "rgba(200, 100, 0, 0.5)";
+		ctx.fillRect(700, 50, 200, 200);
+
+		// 塗りつぶし
+		ctx.fillStyle = "rgba(200, 100, 0, 0.5)";
+		ctx.fillRect(400, 350, 200, 200);
+
+		// 塗りつぶし
+		ctx.fillStyle = "rgba(200, 100, 0, 0.5)";
+		ctx.fillRect(700, 350, 200, 200);
+
+		// くり抜き
+		ctx.fillStyle = "rgb(200, 100, 100)";
+		ctx.clearRect(550, 200, 200, 200);*/
+
+/*		ctx.beginPath();
+		ctx.moveTo(90, 50);			// 最初の点
+		ctx.lineTo(109, 75);		// 2番目の点
+		ctx.lineTo(109, 25);		// 3番目の点
+		ctx.fill();					// 色を付ける
+
+		ctx.beginPath();
+		ctx.moveTo(135, 0);
+		ctx.lineTo(110, 20);
+		ctx.lineTo(160, 20);
+		ctx.fill();
+
+		ctx.beginPath();
+		ctx.moveTo(180, 50);
+		ctx.lineTo(161, 75);
+		ctx.lineTo(161, 25);
+		ctx.closePath();			// パスを閉じる
+		ctx.stroke();				// 線だけで描く
+
+		ctx.beginPath();
+		ctx.moveTo(135, 100);
+		ctx.lineTo(110, 80);
+		ctx.lineTo(160, 80);
+		ctx.closePath();
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.arc(650, 110, 100, 0, Math.PI*0.5, false);
+		ctx.fill();
+
+		ctx.beginPath();
+		ctx.arc(650, 100, 100, 0, Math.PI*0.5, true);
+		ctx.fill();*/
+
+		// ベジエ曲線
+		ctx.moveTo(200, 200);
+		ctx.bezierCurveTo(180, 190,  165, 210, 150, 240);
+		ctx.closePath();
+		ctx.stroke();
+	</script>
+</body>
+</html>
