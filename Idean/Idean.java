@@ -32,8 +32,12 @@ class IdeaMan implements ActionListener {
 		fileName = new JTextField("Idean!", 15);
 
 		openBtn = new JButton("開く");
+		openBtn.addActionListener(this);
+		openBtn.setActionCommand("open");
 
 		saveBtn = new JButton("保存");
+		saveBtn.addActionListener(this);
+		saveBtn.setActionCommand("save");
 
 		textArea = new JTextArea(10, 30);
 		scrollPane = new JScrollPane(textArea);
@@ -50,10 +54,33 @@ class IdeaMan implements ActionListener {
 		con.add(filePanel);
 		con.add(scrollPane);
 
+		// ウィンドウを可視化する
 		frame.setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		textArea.setText("ALOHA!");
+	//	textArea.setText("ALOHA!");
+
+		String cmd = ae.getActionCommand();
+
+		String textFileName = "Aloha";
+
+		// 必要なデータを作る
+		FileReader fr;
+		BufferedReader br;
+
+		try{
+			fr = new FileReader(textFileName);
+			br = new BufferedReader(fr);
+
+			String data;
+
+			while((data = br.readLine()) != null) {
+				textArea.append(data + '\n');
+			}
+		} catch(IOException e) {
+			System.out.println("IOerrer");
+		}
+
 	}
 }
