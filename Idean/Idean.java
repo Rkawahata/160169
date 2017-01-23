@@ -15,6 +15,8 @@ class IdeaMan implements ActionListener {
 	JFrame frame;
 	JTextField fileName;
 	JPanel filePanel;
+	JButton openBtn;
+	JButton saveBtn;
 	JTextArea textArea;
 	JScrollPane scrollPane;
 
@@ -29,12 +31,18 @@ class IdeaMan implements ActionListener {
 		// フィールド、パネルを作る
 		fileName = new JTextField("Idean!", 15);
 
+		openBtn = new JButton("開く");
+
+		saveBtn = new JButton("保存");
+
 		textArea = new JTextArea(10, 30);
 		scrollPane = new JScrollPane(textArea);
 
 		// パネルに、フィールドを載せる
 		filePanel = new JPanel();
 		filePanel.add(fileName);	
+		filePanel.add(openBtn);
+		filePanel.add(saveBtn);
 
 		// ウィンドウに、パネルを載せる
 		Container con = frame.getContentPane();
