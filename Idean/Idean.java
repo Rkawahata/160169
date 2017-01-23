@@ -69,18 +69,38 @@ class IdeaMan implements ActionListener {
 		FileReader fr;
 		BufferedReader br;
 
-		try{
-			fr = new FileReader(textFileName);
-			br = new BufferedReader(fr);
+		if (cmd.equals("open")) {
+			textArea.append("OPEN..." + '\n' + '\n');
 
-			String data;
+			JFileChooser fc = new JFileChooser();
 
-			while((data = br.readLine()) != null) {
-				textArea.append(data + '\n');
+			fc.setCurrentDirectory(new File("IdeaDam.txt"));
+
+			int ret = fc.showOpenDialog(frame);
+
+			if (ret ==  JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+
+				textFileName = file.getAbsolutePath();
+
+				fileName.setText(textFileName);
 			}
-		} catch(IOException e) {
-			System.out.println("IOerrer");
-		}
 
+			try{
+				fr = new FileReader(textFileName);
+				br = new BufferedReader(fr);
+		
+				String data;
+
+				while((data = br.readLine()) != null) {
+				textArea.append(data + '\n');
+				}
+			} catch(IOException e) {
+				System.out.println("IOerrer");
+			}
+		} else if (cmd.equals("save")) {
+			FileWriter fw = null;
+			PrintWriter pw = null;
+		}
 	}
 }
