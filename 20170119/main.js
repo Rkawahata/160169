@@ -1,19 +1,17 @@
 var SCREEN_SIZE = 500;
 var SIDE_CELLS = 200;
 var CELL_SIZE = SCREEN_SIZE / SIDE_CELLS;
-var FPS = 10;
+var FPS = 25;
 var cvs;
 var ctx;
 
 window.onload = function() {
 	var field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
 	var tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
-	for (var i=0; i<field.length; i++) field[i]
-		 = Math.floor(Math.random()*2); // ランダムに「生」「死」を格納
+	for (var i=0; i<field.length; i++) field[i]= Math.floor(Math.random()*2); // ランダムに「生」「死」を格納
 	cvs = document.getElementById('world');
 	cvs.width = cvs.height = SCREEN_SIZE; // キャンバスのサイズを設定
-	var scaleRate = Math.min(window.innerWidth/SCREEN_SIZE,
-		window.innerHeight/SCREEN_SIZE); // cvs引き伸ばし率の取得
+	var scaleRate = Math.min(window.innerWidth/SCREEN_SIZE,	window.innerHeight/SCREEN_SIZE); // cvs引き伸ばし率の取得
 	cvs.style.width = cvs.style.height = SCREEN_SIZE*scaleRate+'px';  // キャンバスを引き伸ばし
 	ctx = cvs.getContext('2d');
 	ctx.fillStyle = 'rgb(211, 85, 149)';          // 色
