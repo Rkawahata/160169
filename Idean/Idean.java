@@ -29,7 +29,7 @@ class IdeaMan implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// フィールド、パネルを作る
-		fileName = new JTextField("Idean!", 15);
+		fileName = new JTextField("", 15);
 
 		openBtn = new JButton("開く");
 		openBtn.addActionListener(this);
@@ -63,7 +63,7 @@ class IdeaMan implements ActionListener {
 
 		String cmd = ae.getActionCommand();
 
-		String textFileName = "Aloha";
+		String textFileName = "IdeaDam.txt";
 
 		// 必要なデータを作る
 		FileReader fr;
@@ -99,8 +99,27 @@ class IdeaMan implements ActionListener {
 				System.out.println("IOerrer");
 			}
 		} else if (cmd.equals("save")) {
+			textArea.append("SAVE..." + '\n' + '\n');
 			FileWriter fw = null;
 			PrintWriter pw = null;
+
+			try{
+				fw = new FileWriter(textFileName);
+				pw = new PrintWriter(fw);
+
+				String data = textArea.getText();
+
+				pw.println(data);
+			} catch(IOException e) {
+				System.out.println("IOerrer");
+			} finally {
+				try{
+					fw.close();
+					pw.close();
+				} catch(IOException e) {
+					System.out.println("IOerrer");
+				}
+			}
 		}
 	}
 }
