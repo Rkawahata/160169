@@ -21,6 +21,7 @@ class IdeaMan implements ActionListener {
 	JButton openBtn;
 	JButton saveBtn;
 	JButton nextBtn;
+	JButton pasteBtn;
 	JTextArea textArea;
 	JTextArea tango1;
 	JTextArea tango2;
@@ -37,6 +38,7 @@ class IdeaMan implements ActionListener {
 		// フィールド、パネルを作る
 		fileName = new JTextField("", 15);
 
+		// ボタンを作る
 		openBtn = new JButton("開く");
 		openBtn.addActionListener(this);
 		openBtn.setActionCommand("open");
@@ -49,6 +51,11 @@ class IdeaMan implements ActionListener {
 		nextBtn.addActionListener(this);
 		nextBtn.setActionCommand("next");
 
+		pasteBtn = new JButton("貼り付け");
+		pasteBtn.addActionListener(this);
+		pasteBtn.setActionCommand("paste");
+
+		// テキストエリア、スクロールを作る
 		textArea = new JTextArea(10, 30);
 		tango1 = new JTextArea(1, 10);
 		tango2 = new JTextArea(1, 10);
@@ -68,6 +75,7 @@ class IdeaMan implements ActionListener {
 		btnPanel.add(openBtn);
 		btnPanel.add(saveBtn);
 		btnPanel.add(nextBtn);
+		btnPanel.add(pasteBtn);
 
 		// ウィンドウに、パネルを載せる
 		Container con = frame.getContentPane();
@@ -81,23 +89,22 @@ class IdeaMan implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-	//	textArea.setText("ALOHA!");
-
+		// 必要なデータを作る
 		String cmd = ae.getActionCommand();
-		String textFileName = "Aloha";
+		String textFileName = "IdeaMan.txt";
 		String data;
 		String tangoDam = "IdeaDam.txt";
 
-		// 必要なデータを作る
 		FileReader fr = null;
 		BufferedReader br = null;
 		FileWriter fw = null;
 		PrintWriter pw = null;
 
-		if(cmd.equals("open")) {
-			// 上書きから付け足し
-//			textArea.setText("OPEN...");
-//			textArea.append("OPEN..." + '\n');
+		if (cmd.equals("open")) {
+/*			上書きから付け足し
+			textArea.setText("OPEN...");
+			textArea.append("OPEN..." + '\n');
+*/
 			// ｢ファイルを開く｣を開く
 			JFileChooser fc = new JFileChooser();
 
@@ -131,28 +138,31 @@ class IdeaMan implements ActionListener {
 			}
 		} else if (cmd.equals("save")) {
 			try{
-				fw = new FileWriter(tangoDam);
+				// ファイルを開く
+				fw = new FileWriter(textFileName);
 				pw = new PrintWriter(fw);
 
+				// テキストエリアの内容を読み取る
 				data = textArea.getText();
-
+				
+				// ファイルに書き込み、保存する
 				pw.println(data);
+
 			} catch(IOException e) {
-				System.out.println("IOerrer");
+				System.out.println("IO error...");
 			} finally {
+				// ファイルを閉じる
 				try{
 					fw.close();
 					pw.close();
 				} catch(IOException e) {
-					System.out.println("IOerrer");
+					System.out.println("IO error...");				
 				}
 			}
 		} else if (cmd.equals("next")) {
 			try{
 				fr = new FileReader(tangoDam);
 				br = new BufferedReader(fr);
-				fw = new FileWriter("IdeaMan.txt", true);
-				pw = new PrintWriter(fw);
 
 				while( (data = br.readLine()) != null ){
 					String[] data2;
@@ -163,20 +173,21 @@ class IdeaMan implements ActionListener {
 					num1 = (int)(Math.random()*9);
 					num2 = (int)(Math.random()*9);
 
-					tango1.append(data2[num1]);
-					tango2.append(data2[num2]);
+					tango1.setText(data2[num1]);
+					tango2.setText(data2[num2]);
 				}
 
 			} catch(IOException e) {
 				System.out.println("IOerrer");
-			} finally {
-				try{
-					fw.close();
-					pw.close();
-				} catch(IOException e) {
-					System.out.println("IOerrer");
-				}
 			}
+		} else if (cmd.equals("paste")) {
+			String text1;
+			String text2;
+
+			text1 = tango1.getText();
+			text2 = tango2.getText();
+
+			textArea.append(text1 + "," + text2 + '\n');
 		}
 	}
 }

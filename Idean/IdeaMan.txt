@@ -1,0 +1,5 @@
+ Mac, Tron
+ Solaris, Symbian
+ Mac, Solaris
+ Android, MVS
+ Tron,Windows

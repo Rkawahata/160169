@@ -1,10 +1,1 @@
-Windows,
-Mac,
-UNIX,
-Solaris,
-Tron,
-Symbian,
-vx-works,
-Android,
-MVS,
-iOS
+Windows, Mac, UNIX, Solaris, Tron, Symbian, vx-works, Android, MVS, iOS
