@@ -14,10 +14,16 @@ class IdeaMan implements ActionListener {
 	// field
 	JFrame frame;
 	JTextField fileName;
-	JPanel filePanel;
+	JLabel word1;
+	JLabel word2;
+	JPanel worldsPanel;
+	JPanel btnPanel;
 	JButton openBtn;
 	JButton saveBtn;
+	JButton nextBtn;
 	JTextArea textArea;
+	JTextArea tango1;
+	JTextArea tango2;
 	JScrollPane scrollPane;
 
 	// method
@@ -39,19 +45,35 @@ class IdeaMan implements ActionListener {
 		saveBtn.addActionListener(this);
 		saveBtn.setActionCommand("save");
 
+		nextBtn = new JButton("次へ");
+		nextBtn.addActionListener(this);
+		nextBtn.setActionCommand("next");
+
 		textArea = new JTextArea(10, 30);
+		tango1 = new JTextArea(1, 10);
+		tango2 = new JTextArea(1, 10);
 		scrollPane = new JScrollPane(textArea);
 
+		word1 = new JLabel("WORD1");
+		word2 = new JLabel("WORD2");
+
 		// パネルに、フィールドを載せる
-		filePanel = new JPanel();
-		filePanel.add(fileName);	
-		filePanel.add(openBtn);
-		filePanel.add(saveBtn);
+		worldsPanel = new JPanel();
+		worldsPanel.add(tango1);
+		worldsPanel.add(word1);
+		worldsPanel.add(tango2);
+		worldsPanel.add(word2);
+
+		btnPanel = new JPanel();
+		btnPanel.add(openBtn);
+		btnPanel.add(saveBtn);
+		btnPanel.add(nextBtn);
 
 		// ウィンドウに、パネルを載せる
 		Container con = frame.getContentPane();
-		con.setLayout(new GridLayout(2, 1));
-		con.add(filePanel);
+		con.setLayout(new GridLayout(3, 1));
+		con.add(worldsPanel);
+		con.add(btnPanel);
 		con.add(scrollPane);
 
 		// ウィンドウを可視化する
@@ -62,54 +84,89 @@ class IdeaMan implements ActionListener {
 	//	textArea.setText("ALOHA!");
 
 		String cmd = ae.getActionCommand();
-
-		String textFileName = "IdeaDam.txt";
+		String textFileName = "Aloha";
+		String data;
+		String tangoDam = "IdeaDam.txt";
 
 		// 必要なデータを作る
-		FileReader fr;
-		BufferedReader br;
+		FileReader fr = null;
+		BufferedReader br = null;
+		FileWriter fw = null;
+		PrintWriter pw = null;
 
-		if (cmd.equals("open")) {
-			textArea.append("OPEN..." + '\n' + '\n');
-
+		if(cmd.equals("open")) {
+			// 上書きから付け足し
+//			textArea.setText("OPEN...");
+//			textArea.append("OPEN..." + '\n');
+			// ｢ファイルを開く｣を開く
 			JFileChooser fc = new JFileChooser();
 
-			fc.setCurrentDirectory(new File("IdeaDam.txt"));
+			// 表示するdirをきめる
+			fc.setCurrentDirectory(new File("."));
 
+			// ダイアログを作る
 			int ret = fc.showOpenDialog(frame);
 
-			if (ret ==  JFileChooser.APPROVE_OPTION) {
+			// 選ばれたファイルを、調べる
+			if (ret == JFileChooser.APPROVE_OPTION) {
+				// 選ばれたファイル
 				File file = fc.getSelectedFile();
 
+				// ファイル名、保存場所を調べる
 				textFileName = file.getAbsolutePath();
 
+				// テキストフィールドに表示
 				fileName.setText(textFileName);
 			}
 
 			try{
 				fr = new FileReader(textFileName);
 				br = new BufferedReader(fr);
-		
-				String data;
 
 				while((data = br.readLine()) != null) {
-				textArea.append(data + '\n');
+					textArea.append(data + '\n');
 				}
 			} catch(IOException e) {
-				System.out.println("IOerrer");
+				System.out.println("IO error...");
 			}
 		} else if (cmd.equals("save")) {
-			textArea.append("SAVE..." + '\n' + '\n');
-			FileWriter fw = null;
-			PrintWriter pw = null;
-
 			try{
-				fw = new FileWriter(textFileName);
+				fw = new FileWriter(tangoDam);
 				pw = new PrintWriter(fw);
 
-				String data = textArea.getText();
+				data = textArea.getText();
 
 				pw.println(data);
+			} catch(IOException e) {
+				System.out.println("IOerrer");
+			} finally {
+				try{
+					fw.close();
+					pw.close();
+				} catch(IOException e) {
+					System.out.println("IOerrer");
+				}
+			}
+		} else if (cmd.equals("next")) {
+			try{
+				fr = new FileReader(tangoDam);
+				br = new BufferedReader(fr);
+				fw = new FileWriter("IdeaMan.txt", true);
+				pw = new PrintWriter(fw);
+
+				while( (data = br.readLine()) != null ){
+					String[] data2;
+					int num1;
+					int num2;
+
+					data2 = data.split(",");
+					num1 = (int)(Math.random()*9);
+					num2 = (int)(Math.random()*9);
+
+					tango1.append(data2[num1]);
+					tango2.append(data2[num2]);
+				}
+
 			} catch(IOException e) {
 				System.out.println("IOerrer");
 			} finally {
