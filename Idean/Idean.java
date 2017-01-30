@@ -167,7 +167,7 @@ class IdeaMan implements ActionListener {
 					bw.close();
 					pw.close();
 				} catch(IOException e) {
-					System.out.println("IO error...");
+					System.out.println("IO ClosingError...");
 				}
 			}
 		} else if (cmd.equals("next")) {
