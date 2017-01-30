@@ -19,7 +19,6 @@
 
 			var shikaku = new createjs.Shape();
 
-			var XY;
 
 			shikaku.graphics.beginStroke("#6C962A");
 			shikaku.graphics.setStrokeStyle(5);
@@ -27,14 +26,16 @@
 
 			stage.addChild(shikaku);
 
-			createjs.Ticker.on('tick', function(){
-				XY = 1;
-				shikaku.x += 5 * XY;
+			createjs.Ticker.on('tick', function() {
+				var xy = 1;
+				shikaku.x += 5 * xy;
+
 				if (shikaku.x > 400) {
-					XY = -1;
+					xy = -1;
 				} else if (shikaku.x < 0) {
-					XY = 1;
+					xy = 1;
 				}
+
 				stage.update();
 				});
 		}
