@@ -92,19 +92,11 @@ class IdeaMan implements ActionListener {
 		// 必要なデータを作る
 		String cmd = ae.getActionCommand();
 		String textFileName = "IdeaMan.txt";
-		String textFileName2 = "IdeaMan2.txt";
 		String data;
-		String tangoDam = "words.txt";
+		String tangoDam = "IdeaDam.txt";
 
-		File inFile = new File("words.txt");
-		FileInputStream fis = null;
-		InputStreamReader isr = null;
 		FileReader fr = null;
 		BufferedReader br = null;
-
-		FileOutputStream fo = null;
-		OutputStreamWriter ow = null;
-		BufferedWriter bw = null;
 		FileWriter fw = null;
 		PrintWriter pw = null;
 
@@ -147,42 +139,38 @@ class IdeaMan implements ActionListener {
 		} else if (cmd.equals("save")) {
 			try{
 				// ファイルを開く
-				fo = new FileOutputStream("IdeaMan2.txt");
-				ow = new OutputStreamWriter(fo, "UTF-8");
-				bw = new BufferedWriter(ow);
-				pw = new PrintWriter(bw);
+				fw = new FileWriter(textFileName);
+				pw = new PrintWriter(fw);
 
 				// テキストエリアの内容を読み取る
 				data = textArea.getText();
 				
 				// ファイルに書き込み、保存する
 				pw.println(data);
+
 			} catch(IOException e) {
 				System.out.println("IO error...");
 			} finally {
 				// ファイルを閉じる
 				try{
-//					fo.close();
-//					ow.close();
-					bw.close();
+					fw.close();
 					pw.close();
 				} catch(IOException e) {
-					System.out.println("IO ClosingError...");
+					System.out.println("IO error...");				
 				}
 			}
 		} else if (cmd.equals("next")) {
 			try{
-				fis = new FileInputStream(inFile);
-				isr = new InputStreamReader(fis, "UTF-8");
-				br = new BufferedReader(isr);
+				fr = new FileReader(tangoDam);
+				br = new BufferedReader(fr);
 
 				while( (data = br.readLine()) != null ){
 					String[] data2;
-					int kz = 16;
+					int kz = 9;
 					int num1;
 					int num2;
 
-					data2 = data.split(", ");
+					data2 = data.split(",");
 					num1 = (int)(Math.random()*kz);
 					num2 = (int)(Math.random()*kz);
 
