@@ -166,12 +166,13 @@ class IdeaMan implements ActionListener {
 
 				while( (data = br.readLine()) != null ){
 					String[] data2;
+					int kz = 9;
 					int num1;
 					int num2;
 
 					data2 = data.split(",");
-					num1 = (int)(Math.random()*9);
-					num2 = (int)(Math.random()*9);
+					num1 = (int)(Math.random()*kz);
+					num2 = (int)(Math.random()*kz);
 
 					tango1.setText(data2[num1]);
 					tango2.setText(data2[num2]);
