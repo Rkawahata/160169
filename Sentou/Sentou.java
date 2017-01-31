@@ -19,6 +19,8 @@ class SentouMan {
 	JPanel panel;
 	JTextField textField1;
 	JTextField textField2;
+	JTextArea log;
+	JScrollPane scrollPane;
 
 	// method
 	public SentouMan() {
@@ -32,8 +34,13 @@ class SentouMan {
 		textField1 = new JTextField("", 5);
 		textField2 = new JTextField("", 5);
 
+		// ラベルを作る
 		label1 = new JLabel("1player");
 		label2 = new JLabel("2player");
+
+		// テキストエリア、スクロールを作る
+		log = new JTextArea(10, 30);
+		scrollPane = new JScrollPane(log);
 
 		// パネルを作る、載せる
 		panel = new JPanel();
@@ -45,6 +52,7 @@ class SentouMan {
 		Container con = frame.getContentPane();
 		con.setLayout(new GridLayout(3, 1));
 		con.add(panel);
+		con.add(scrollPane);
 
 		// ウィンドウを可視化する
 		frame.setVisible(true);
