@@ -10,6 +10,7 @@ public class Idean {
 }
 
 
+
 class IdeaMan implements ActionListener {
 	// field
 	JFrame frame;
