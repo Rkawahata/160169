@@ -83,8 +83,13 @@ class SentouMan implements ActionListener {
 		String data1;
 		String data2;
 		String setHp;
+		String setMp;
+		int num1;
+		int num2;
+		int kz;
 
 		File inFile = new File("HitPointSet.txt");
+		File inFile2 = new File("ManaPointSet.txt");
 		FileInputStream fis = null;
 		InputStreamReader isr = null;
 		FileReader fr = null;
@@ -97,10 +102,8 @@ class SentouMan implements ActionListener {
 				br = new BufferedReader(isr);
 
 				while( (setHp = br.readLine()) != null ) {
-					String[] hp;
-					int kz = 4;
-					int num1;
-					int num2;
+					String[] hp = null;
+					kz = 4;
 
 					hp = setHp.split(", ");
 					num1 = (int)(Math.random()*kz);
@@ -110,8 +113,27 @@ class SentouMan implements ActionListener {
 					data2 = textField2.getText();
 
 					log.setText(data1 + " VS " + data2 + '\n');
-					log.append(data1 + ": " + hp[num1] + " | ");
+					log.append("HP" + data1 + ": " + hp[num1] + " | ");
 					log.append(data2 + ": " + hp[num2] + '\n');
+				}
+
+				fis = new FileInputStream(inFile2);
+				isr = new InputStreamReader(fis, "UTF-8");
+				br = new BufferedReader(isr);
+
+				while( (setMp = br.readLine()) != null ) {
+					String[] mp = null;
+					kz = 3;
+
+					num1 = (int)(Math.random()*kz);
+					num2 = (int)(Math.random()*kz);
+
+					mp = setMp.split(", ");
+					data1 = textField1.getText();
+					data2 = textField2.getText();
+
+					log.append("MP" + data1 + ": " + mp[num1] + " | ");
+					log.append(data2 + ": " + mp[num2] + '\n');
 					log.append("Fight!" + '\n' + '\n');
 				}
 			} catch (IOException e) {
