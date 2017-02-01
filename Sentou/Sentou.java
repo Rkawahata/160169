@@ -141,6 +141,8 @@ class SentouMan implements ActionListener {
 			}
 		} else if (cmd.equals("next")) {
 			int game = 1;
+			int hp = this;
+			int mp = this;
 
 		}
 	}
