@@ -31,7 +31,7 @@ class IdeaMan2 implements ActionListener {
 	// method
 	public IdeaMan2() {
 		// ウィンドウを作る
-		frame = new JFrame("Idean");
+		frame = new JFrame("Idean2");
 		frame.setLocation(600, 50);
 		frame.setSize(400, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -192,7 +192,11 @@ class IdeaMan2 implements ActionListener {
 				}
 
 			} catch(IOException e) {
+<<<<<<< HEAD
 				System.out.println("IOerrer");
+=======
+				System.out.println("IO Errer...");
+>>>>>>> Sentou
 			}
 		} else if (cmd.equals("paste")) {
 			String text1;
