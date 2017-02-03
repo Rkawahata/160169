@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>createjs 160169</title>
+
+	<style>
+		canvas{background: WhiteSmoke;}
+	</style>
+</head>
+<body>
+	<h1>球に当たらずにたどり着け</h1>
+	<hr>
+
+	<canvas id="myCanvas" width="1260" height="500"></canvas>
+
+	<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+
+	<script>
+		window.addEventListener('load', init);
+		function init() {
+			var stage = new createjs.Stage("myCanvas");
+			var ballList = [];
+
+			for (var i = 0; i < 50; i++) {
+				var ball = new createjs.Shape();
+				ball.graphics.beginFill("#0060ff");
+				ball.graphics.drawCircle(80, 0, 50);
+				stage.addChild(ball);
+
+				ball.x = 1100*Math.random();
+				ball.y = 500*Math.random();
+
+				ballList[i] = ball;
+			}
+
+			var ziki = new createjs.Shape();
+			ziki.graphics.beginFill("#ff0000");
+			ziki.graphics.drawCircle(10, 250, 10);
+
+			stage.addChild(ziki);
+
+			createjs.Ticker.addEventListener('tick', handleTick); 
+			function handleTick() {
+				var X = 10;
+
+				ziki.x += X;
+				if (ziki.x > 100) {
+					X = -10;
+				} else if (ziki.x < 10) {
+					X = 10;
+				}
+
+/*				for(var n = 0; n < ballList.length; i++) {
+					var ball = ballList[n];
+					var point = ziki.localToLocal(0, 0, ball);
+					var isHit = ball.hitTest(point.x, point.y);
+
+					if (isHit == true) {
+						ball.graphics.clear()
+							.beginFill("#f0ff00");
+					} else {
+						ball.graphics.clear()
+							.beginFill("#0060ff");
+					}
+				}
+*/
+				stage.update();
+			}
+		}
+	</script>
+</body>
+</html>
