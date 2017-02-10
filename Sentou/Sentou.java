@@ -144,6 +144,7 @@ class SentouMan implements ActionListener {
 			int hp = this;
 			int mp = this;
 
+			
 		}
 	}
 }
