@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
+import java.util.Random;
 
 public class Sentou {
 	public static void main(String[] args) {
@@ -82,69 +83,46 @@ class SentouMan implements ActionListener {
 		String cmd = ae.getActionCommand();
 		String data1;
 		String data2;
-		String setHp;
-		String setMp;
-		int num1;
-		int num2;
-		int kz;
-
-		File inFile = new File("HitPointSet.txt");
-		File inFile2 = new File("ManaPointSet.txt");
-		FileInputStream fis = null;
-		InputStreamReader isr = null;
-		FileReader fr = null;
-		BufferedReader br = null;
+		int setHp;
+		int setMp;
+		Random rnd1 = new Random();
+		Random rnd2 = new Random();
+		int kz1;
+		int kz2;
+		int game = 1;
 
 		if(cmd.equals("save")) {
-			try{
-				fis = new FileInputStream(inFile);
-				isr = new InputStreamReader(fis, "UTF-8");
-				br = new BufferedReader(isr);
+			int[] hp = {100, 150, 200, 250, 300};
+			kz1 = 4;
 
-				while( (setHp = br.readLine()) != null ) {
-					String[] hp = null;
-					kz = 4;
+			int ran1 = rnd1.nextInt(kz1);
+			int ran2 = rnd2.nextInt(kz1);
 
-					hp = setHp.split(", ");
-					num1 = (int)(Math.random()*kz);
-					num2 = (int)(Math.random()*kz);
+			data1 = textField1.getText();
+			data2 = textField2.getText();
 
-					data1 = textField1.getText();
-					data2 = textField2.getText();
+			log.setText(data1 + " VS " + data2 + '\n');
+			log.append("HP" + data1 + ": " + hp[ran1] + " | ");
+			log.append(data2 + ": " + hp[ran2] + '\n');
 
-					log.setText(data1 + " VS " + data2 + '\n');
-					log.append("HP" + data1 + ": " + hp[num1] + " | ");
-					log.append(data2 + ": " + hp[num2] + '\n');
-				}
+			int[] mp = {50, 100, 150, 200};
+			kz2 = 3;
 
-				fis = new FileInputStream(inFile2);
-				isr = new InputStreamReader(fis, "UTF-8");
-				br = new BufferedReader(isr);
+			int ran3 = rnd1.nextInt(kz2);
+			int ran4 = rnd1.nextInt(kz2);
 
-				while( (setMp = br.readLine()) != null ) {
-					String[] mp = null;
-					kz = 3;
+			data1 = textField1.getText();
+			data2 = textField2.getText();
 
-					num1 = (int)(Math.random()*kz);
-					num2 = (int)(Math.random()*kz);
-
-					mp = setMp.split(", ");
-					data1 = textField1.getText();
-					data2 = textField2.getText();
-
-					log.append("MP" + data1 + ": " + mp[num1] + " | ");
-					log.append(data2 + ": " + mp[num2] + '\n');
-					log.append("Fight!" + '\n' + '\n');
-				}
-			} catch (IOException e) {
-				System.out.println("IO Errer...");
-			}
+			log.append("MP" + data1 + ": " + mp[ran3] + " | ");
+			log.append(data2 + ": " + mp[ran4] + '\n');
+			log.append("Fight!" + '\n' + '\n');
 		} else if (cmd.equals("next")) {
-			int game = 1;
-			int hp = this;
-			int mp = this;
-
-			
+			if (this.hp >= 50) {
+				kz1 = 50;
+				int dmg = rnd1.nextInt(kz1);
+				
+			}
 		}
 	}
 }
