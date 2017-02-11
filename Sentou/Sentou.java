@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
+import java.util.*;
 
 public class Sentou {
 	public static void main(String[] args) {
@@ -19,7 +20,8 @@ class SentouMan implements ActionListener {
 	JPanel panel;
 	JPanel btnPanel;
 	JButton saveBtn;
-	JButton nextBtn;
+	JButton nextBtn1;
+	JButton nextBtn2;
 	JTextField textField1;
 	JTextField textField2;
 	JTextArea log;
@@ -48,9 +50,13 @@ class SentouMan implements ActionListener {
 		saveBtn.addActionListener(this);
 		saveBtn.setActionCommand("save");
 
-		nextBtn = new JButton("次へ");
-		nextBtn.addActionListener(this);
-		nextBtn.setActionCommand("next");
+		nextBtn1 = new JButton("攻撃1");
+		nextBtn1.addActionListener(this);
+		nextBtn1.setActionCommand("next1");
+
+		nextBtn2 = new JButton("攻撃2");
+		nextBtn2.addActionListener(this);
+		nextBtn2.setActionCommand("next2");
 
 		// テキストエリア、スクロールを作る
 		log = new JTextArea(10, 30);
@@ -65,7 +71,8 @@ class SentouMan implements ActionListener {
 
 		btnPanel = new JPanel();
 		btnPanel.add(saveBtn);
-		btnPanel.add(nextBtn);
+		btnPanel.add(nextBtn1);
+		btnPanel.add(nextBtn2);
 
 		Container con = frame.getContentPane();
 		con.setLayout(new GridLayout(3, 1));
@@ -82,68 +89,39 @@ class SentouMan implements ActionListener {
 		String cmd = ae.getActionCommand();
 		String data1;
 		String data2;
-		String setHp;
-		String setMp;
-		int num1;
-		int num2;
-		int kz;
+		Random rnd = new Random();
+		int hp1 = 100;
+		int hp2 = 100;
+		int game = 1;
 
-		File inFile = new File("HitPointSet.txt");
-		File inFile2 = new File("ManaPointSet.txt");
-		FileInputStream fis = null;
-		InputStreamReader isr = null;
-		FileReader fr = null;
-		BufferedReader br = null;
+		data1 = textField1.getText();
+		data2 = textField2.getText();
 
-		if(cmd.equals("save")) {
-			try{
-				fis = new FileInputStream(inFile);
-				isr = new InputStreamReader(fis, "UTF-8");
-				br = new BufferedReader(isr);
+		if (hp1 > 0 && hp2 > 0) {
+			if(cmd.equals("save")) {
+				log.setText(data1 + " VS " + data2 + '\n');
+				log.append("HP" + data1 + ": " + hp1 + " | ");
+				log.append(data2 + ": " + hp2 + '\n');
+				log.append("Fight!" + '\n' + '\n');
+			} else if (cmd.equals("next1")) {
+				int dmg = rnd.nextInt(150);
+				hp1 = hp1 - dmg;
 
-				while( (setHp = br.readLine()) != null ) {
-					String[] hp = null;
-					kz = 4;
-
-					hp = setHp.split(", ");
-					num1 = (int)(Math.random()*kz);
-					num2 = (int)(Math.random()*kz);
-
-					data1 = textField1.getText();
-					data2 = textField2.getText();
-
-					log.setText(data1 + " VS " + data2 + '\n');
-					log.append("HP" + data1 + ": " + hp[num1] + " | ");
-					log.append(data2 + ": " + hp[num2] + '\n');
+				log.append(data1 + "の攻撃" + '\n');
+				log.append(data2 + "の残りHP: " + hp1 + '\n');	
+				if (hp1 <=0) {
+						log.append('\n' + data1 + ": LOOSE");
 				}
+			} else if (cmd.equals("next2")) {
+				int dmg = rnd.nextInt(150);
+				hp2 = hp2 - dmg;
 
-				fis = new FileInputStream(inFile2);
-				isr = new InputStreamReader(fis, "UTF-8");
-				br = new BufferedReader(isr);
-
-				while( (setMp = br.readLine()) != null ) {
-					String[] mp = null;
-					kz = 3;
-
-					num1 = (int)(Math.random()*kz);
-					num2 = (int)(Math.random()*kz);
-
-					mp = setMp.split(", ");
-					data1 = textField1.getText();
-					data2 = textField2.getText();
-
-					log.append("MP" + data1 + ": " + mp[num1] + " | ");
-					log.append(data2 + ": " + mp[num2] + '\n');
-					log.append("Fight!" + '\n' + '\n');
+				log.append('\n' + data2 + "の攻撃" + '\n');
+				log.append(data1 + "の残りHP: " + hp2 + '\n');
+				if (hp2 <= 0) {
+					log.append('\n' + data2 + ": LOOSE");
 				}
-			} catch (IOException e) {
-				System.out.println("IO Errer...");
 			}
-		} else if (cmd.equals("next")) {
-			int game = 1;
-			int hp = this;
-			int mp = this;
-
 		}
 	}
 }

@@ -192,11 +192,7 @@ class IdeaMan2 implements ActionListener {
 				}
 
 			} catch(IOException e) {
-<<<<<<< HEAD
-				System.out.println("IOerrer");
-=======
 				System.out.println("IO Errer...");
->>>>>>> Sentou
 			}
 		} else if (cmd.equals("paste")) {
 			String text1;
