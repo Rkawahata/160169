@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>createjs 160169</title>
+
+	<style>
+		canvas{background: WhiteSmoke;}
+	</style>
+</head>
+<body>
+	<h1>球に当たらずにたどり着け</h1>
+	<hr>
+
+	<canvas id="myCanvas" width="1260" height="500"></canvas>
+
+	<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+
+	<script>
+		window.addEventListener('load', init);
+		function init() {
+			var stage = new createjs.Stage("myCanvas");
+			var ballList = [];
+
+			for (var i = 0; i < 40; i++) {
+				var ball = new createjs.Shape();
+				ball.graphics.beginFill("#0060ff");
+				ball.graphics.drawCircle(80, 0, 50);
+				stage.addChild(ball);
+
+				ball.x = 1100*Math.random();
+				ball.y = 500*Math.random();
+
+				ballList[i] = ball;
+			}
+
+			var ziki = new createjs.Shape();
+			ziki.graphics.beginFill("#ff0000");
+			ziki.graphics.drawCircle(10, 0, 10);
+
+			ziki.y = 250;
+
+			stage.addChild(ziki);
+
+			var xy = 1;
+
+			window.addEventListener("keydown", handleKeyDown);
+			function handleKeyDown(event){
+				var keyCode = event.keyCode;
+
+				if (keyCode == 39) {
+					ziki.x += 10;
+				} else if (keyCode == 37) {
+					ziki.x -= 10;
+				} else if (keyCode == 40) {
+					ziki.y += 10;
+				} else if (keyCode == 38) {
+					ziki.y -= 10;
+				}
+			}
+
+			createjs.Ticker.addEventListener('tick', handleTick); 
+			function handleTick() {
+/*				ziki.x += 10*xy;
+				if (ziki.x > 1250) {
+					xy = -1;
+				} else if (ziki.x < 10) {
+					xy = 1;
+				}
+*/
+				for(var i = 0; i < ballList.length; i++) {
+					var ball = ballList[i];
+					var point = ziki.localToLocal(0, 0, ball);
+					var isHit = ball.hitTest(point.x, point.y);
+
+					if (isHit == true) {
+						ball.graphics.clear()
+							.beginFill("#f0ff00")
+							.drawCircle(80, 0, 50);
+					} else {
+						ball.graphics.clear()
+							.beginFill("#0060ff")
+							.drawCircle(80, 0, 50);
+					}
+
+					if (isHit == true) {
+						alert("GameOver" + '\n' + "ページを更新してください");
+						for (var i = 0; i < 40; i++) {
+							ball.x = 1100*Math.random();
+							ball.y = 500*Math.random();
+
+							ballList[i] = ball;
+						}
+
+						ziki.x = 0;
+						ziki.y = 250;
+
+					} else if (ziki.x > 1245) {
+						alert("You did it!" + '\n' + "ページを更新してください");
+
+						ziki.x = 0;
+						ziki.y = 250;
+					}
+				}
+
+				stage.update();
+			}
+		}
+	</script>
+</body>
+</html>

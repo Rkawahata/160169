@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>test: createjs</title>
+</head>
+<body>
+	<h1>test: createJS</h1>
+	<hr>
+
+	<canvas id="myCanvas" width="600" height="400"></canvas>
+
+	<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+
+	<script>
+		window.addEventListener('load', init);
+		function init() {
+			// stageを作る
+			var　stage = new createjs.Stage("myCanvas");
+
+			var dragPX;
+			var dragPY;
+
+			// shapeを作る
+			var shikaku = new createjs.Shape();
+			shikaku.graphics.beginFill("#ff0000");
+			shikaku.graphics.drawRect(0, 0, 100, 100);	
+			shikaku.x = stage.canvas.width / 2;
+			shikaku.y = stage.canvas.height / 2;
+
+			// 載せる
+			stage.addChild(shikaku);
+
+			// EventListenerをつける
+//			shikaku.addEventListener('click', handleClick);
+
+/*			stage.enableMouseOver();
+			shikaku.addEventListener('mouseover', handleMouseOver);*/
+
+			shikaku.addEventListener('mousedown', handleDown)
+			shikaku.addEventListener('pressmove', handleMove);
+			shikaku.addEventListener('pressup', handleUp);
+
+			window.addEventListener('keydown', handleKeydown);
+
+/*			function handleClick(event) {
+				alert("ALOHA!");
+			}*/
+
+/*			function handleMouseOver(event) {
+				alert("handleMouseOver!")
+			}*/
+
+			function handleDown(event) {
+				dragPX = stage.mouseX - shikaku.x;
+				dragPY = stage.mouseY - shikaku.y;
+
+				shikaku.alpha = 0.5;
+			}
+
+			function handleMove(event) {
+				shikaku.x = stage.mouseX - dragPX;
+				shikaku.y = stage.mouseY - dragPY;
+			}
+
+			function handleUp(event) {
+				// alert("handleUp!");
+
+				shikaku.alpha = 1.0;
+			}
+
+			function handleKeydown(event) {
+				var keyCode = event.keyCode;
+
+				// alert(keyCode);
+			}
+
+			createjs.Ticker.addEventListener('tick', handleTick); 
+			function handleTick() {
+/*				var mx = stage.mouseX;		// マウスの座標
+				var my = stage.mouseY;		// マウスの座標
+
+				shikaku.x = mx;				// shapeの座標
+				shikaku.y = my;				// shapeの座標
+
+*/				stage.update();
+			};
+		}
+	</script>
+</body>
+</html>

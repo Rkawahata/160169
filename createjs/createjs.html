@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>createjs</title>
+</head>
+<body>
+	<h1>createjsの練習</h1>
+	<hr>
+
+	<canvas id="myCanvas" width="300" height="300"></canvas>
+
+	<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+
+	<script>
+		window.addEventListener('load', init);
+		function init() {
+			// stageオブジェクト
+			var stage = new createjs.Stage("myCanvas");
+
+			// shapeオブジェクト(図形の元)をつくる
+			var shikaku = new createjs.Shape();
+			var maru1 = new createjs.Shape();
+			var maru2 = new createjs.Shape();
+			var maru3 = new createjs.Shape();
+			var maru4 = new createjs.Shape();
+			var dango1 = new createjs.Shape();
+			var dango2 = new createjs.Shape();
+			var dango3 = new createjs.Shape();
+
+			// 四角を書く
+/*			shikaku.graphics.beginFill("#ff0000");
+			shikaku.graphics.drawRect(75, 75, 100, 100);
+			shikaku.rotation = 45;
+
+			maru1.graphics.beginFill("#0D1FC9");
+			maru1.graphics.drawCircle(0, 0, 100);
+			
+			maru2.graphics.beginStroke("#1C9B82");
+			maru2.graphics.setStrokeStyle(8)
+			maru2.graphics.drawCircle(250, 0, 100);
+			
+			maru3.graphics.beginFill("#F41EC9");
+			maru3.graphics.drawCircle(0, 250, 100);
+			
+			maru4.graphics.beginStroke("#EF7012");
+			maru4.graphics.setStrokeStyle(8)
+			maru4.graphics.drawCircle(250, 250, 100);
+*/
+			dango1.graphics.beginFill("#ff0000");
+			dango1.graphics.drawCircle(50, -45, 50);
+
+			dango2.graphics.beginFill("#00ff00");
+			dango2.graphics.drawCircle(150, -45, 50);
+
+			dango3.graphics.beginFill("#0000ff");
+			dango3.graphics.drawCircle(250, -45, 50);
+			// stageに、addする
+/*			stage.addChild(shikaku);
+			stage.addChild(maru1);
+			stage.addChild(maru2);
+			stage.addChild(maru3);
+			stage.addChild(maru4);
+*/			stage.addChild(dango1);
+			stage.addChild(dango2);
+			stage.addChild(dango3);
+
+			// 表示する
+			createjs.Ticker.on('tick', function() {
+				dango1.y += 1;
+				dango2.y += 1;
+				dango3.y += 1;
+				if (dango1.y >= 400) {
+					dango1.y = -40;
+					dango3.y = -40;
+				} else if (dango2.x > 250) {
+					dango2.y = -40;
+					dango2.x = 0;
+				} else if (dango2.y > 150) {
+					dango2.y -= 1;
+					dango2.x += 1;
+				}
+				stage.update();
+			});
+		}
+	</script>
+</body>
+</html>
