@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
-import java.util.Random;
+import java.util.*;
 
 public class Sentou {
 	public static void main(String[] args) {
@@ -20,7 +20,8 @@ class SentouMan implements ActionListener {
 	JPanel panel;
 	JPanel btnPanel;
 	JButton saveBtn;
-	JButton nextBtn;
+	JButton nextBtn1;
+	JButton nextBtn2;
 	JTextField textField1;
 	JTextField textField2;
 	JTextArea log;
@@ -49,9 +50,13 @@ class SentouMan implements ActionListener {
 		saveBtn.addActionListener(this);
 		saveBtn.setActionCommand("save");
 
-		nextBtn = new JButton("次へ");
-		nextBtn.addActionListener(this);
-		nextBtn.setActionCommand("next");
+		nextBtn1 = new JButton("攻撃1");
+		nextBtn1.addActionListener(this);
+		nextBtn1.setActionCommand("next1");
+
+		nextBtn2 = new JButton("攻撃2");
+		nextBtn2.addActionListener(this);
+		nextBtn2.setActionCommand("next2");
 
 		// テキストエリア、スクロールを作る
 		log = new JTextArea(10, 30);
@@ -66,7 +71,8 @@ class SentouMan implements ActionListener {
 
 		btnPanel = new JPanel();
 		btnPanel.add(saveBtn);
-		btnPanel.add(nextBtn);
+		btnPanel.add(nextBtn1);
+		btnPanel.add(nextBtn2);
 
 		Container con = frame.getContentPane();
 		con.setLayout(new GridLayout(3, 1));
@@ -83,45 +89,38 @@ class SentouMan implements ActionListener {
 		String cmd = ae.getActionCommand();
 		String data1;
 		String data2;
-		int setHp;
-		int setMp;
-		Random rnd1 = new Random();
-		Random rnd2 = new Random();
-		int kz1;
-		int kz2;
+		Random rnd = new Random();
+		int hp1 = 100;
+		int hp2 = 100;
 		int game = 1;
 
-		if(cmd.equals("save")) {
-			int[] hp = {100, 150, 200, 250, 300};
-			kz1 = 4;
+		data1 = textField1.getText();
+		data2 = textField2.getText();
 
-			int ran1 = rnd1.nextInt(kz1);
-			int ran2 = rnd2.nextInt(kz1);
+		if (hp1 > 0 && hp2 > 0) {
+			if(cmd.equals("save")) {
+				log.setText(data1 + " VS " + data2 + '\n');
+				log.append("HP" + data1 + ": " + hp1 + " | ");
+				log.append(data2 + ": " + hp2 + '\n');
+				log.append("Fight!" + '\n' + '\n');
+			} else if (cmd.equals("next1")) {
+				int dmg = rnd.nextInt(150);
+				hp1 = hp1 - dmg;
 
-			data1 = textField1.getText();
-			data2 = textField2.getText();
+				log.append(data1 + "の攻撃" + '\n');
+				log.append(data2 + "の残りHP: " + hp1 + '\n');	
+				if (hp1 <=0) {
+						log.append('\n' + data1 + ": LOOSE");
+				}
+			} else if (cmd.equals("next2")) {
+				int dmg = rnd.nextInt(150);
+				hp2 = hp2 - dmg;
 
-			log.setText(data1 + " VS " + data2 + '\n');
-			log.append("HP" + data1 + ": " + hp[ran1] + " | ");
-			log.append(data2 + ": " + hp[ran2] + '\n');
-
-			int[] mp = {50, 100, 150, 200};
-			kz2 = 3;
-
-			int ran3 = rnd1.nextInt(kz2);
-			int ran4 = rnd1.nextInt(kz2);
-
-			data1 = textField1.getText();
-			data2 = textField2.getText();
-
-			log.append("MP" + data1 + ": " + mp[ran3] + " | ");
-			log.append(data2 + ": " + mp[ran4] + '\n');
-			log.append("Fight!" + '\n' + '\n');
-		} else if (cmd.equals("next")) {
-			if (this.hp >= 50) {
-				kz1 = 50;
-				int dmg = rnd1.nextInt(kz1);
-				
+				log.append('\n' + data2 + "の攻撃" + '\n');
+				log.append(data1 + "の残りHP: " + hp2 + '\n');
+				if (hp2 <= 0) {
+					log.append('\n' + data2 + ": LOOSE");
+				}
 			}
 		}
 	}
